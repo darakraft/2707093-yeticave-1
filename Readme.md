@@ -1,6 +1,6 @@
 # Личный проект «YetiCave»
 
-* Студент: [Неопознанный енот](https://up.htmlacademy.ru/php-individual/1/user/2707093).
+* Студент: [Паукова Дарья](https://up.htmlacademy.ru/php-individual/1/user/2707093).
 * Наставник: `Неизвестно`.
 
 ---
