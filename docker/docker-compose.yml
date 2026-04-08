@@ -1,0 +1,49 @@
+name: htmlacademy
+
+services:
+    php:
+        build:
+            context: php
+            dockerfile: Dockerfile
+            args:
+                PHP_VERSION: '8.5'
+                FPM_PORT: 9000
+                DIR: /app
+        container_name: htmlacademy-php
+        hostname: localhost
+        restart: unless-stopped
+        volumes:
+            - ../:/app
+            - ./php/php.ini:/usr/local/etc/php/php.ini:ro
+        working_dir: /
+
+    nginx:
+        image: nginx:1.21
+        container_name: htmlacademy-nginx
+        environment:
+            LISTEN_HTTP: 80
+            PHP_FPM_HOST: php
+            PHP_FPM_PORT: 9000
+        ports:
+            - '8680:80'
+        restart: unless-stopped
+
+        volumes:
+            - ../:/app
+            - ./nginx/default.conf.template:/etc/nginx/templates/default.conf.template:ro
+        working_dir: /
+
+    mysql:
+        image: mysql
+        container_name: htmlacademy-mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: password
+        ports:
+            - '8606:3306'
+        restart: always
+        volumes:
+            - mysql_data:/var/lib/mysql
+
+volumes:
+    mysql_data:
+        driver: local
